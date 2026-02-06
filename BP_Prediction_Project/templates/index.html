@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hypertension Prediction</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+<div class="container">
+    <h1>🩺 Hypertension Risk Assessment</h1>
+    <p class="subtitle">Clinical Decision Support System</p>
+
+    <form method="POST" action="/predict">
+
+        <h3>Demographics</h3>
+        <select name="gender" required>
+            <option value="">Gender</option>
+            <option value="0">Male</option>
+            <option value="1">Female</option>
+        </select>
+
+        <select name="age_group" required>
+            <option value="">Age Group</option>
+            <option value="1">18–34</option>
+            <option value="2">35–50</option>
+            <option value="3">51–64</option>
+            <option value="4">65+</option>
+        </select>
+
+        <h3>Medical History</h3>
+        <select name="family_history"><option value="0">No Family History</option><option value="1">Family History</option></select>
+        <select name="treatment"><option value="0">Not Under Treatment</option><option value="1">Under Treatment</option></select>
+
+        <h3>Symptoms</h3>
+        <select name="breath"><option value="0">No Breath Issue</option><option value="1">Shortness of Breath</option></select>
+        <select name="vision"><option value="0">No Vision Issue</option><option value="1">Vision Changes</option></select>
+        <select name="nose"><option value="0">No Nose Bleed</option><option value="1">Nose Bleeding</option></select>
+
+        <h3>Blood Pressure</h3>
+        <input type="number" name="systolic" placeholder="Systolic BP" required>
+        <input type="number" name="diastolic" placeholder="Diastolic BP" required>
+
+        <h3>Lifestyle</h3>
+        <select name="diet"><option value="0">Uncontrolled Diet</option><option value="1">Controlled Diet</option></select>
+        <select name="medication"><option value="0">Poor Adherence</option><option value="1">Good Adherence</option></select>
+
+        <button type="submit">Predict</button>
+    </form>
+
+    {% if result %}
+    <div class="result {{ risk_class }}">
+        <h2>{{ result }}</h2>
+        <p><b>Confidence:</b> {{ confidence }}%</p>
+        <p><b>Recommendation:</b> {{ advice }}</p>
+        <p><b>Action:</b> {{ action }}</p>
+    </div>
+    {% endif %}
+</div>
+</body>
+</html>
